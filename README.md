@@ -10,6 +10,6 @@ To install [requests](http://docs.python-requests.org/en/master/user/install/#in
 To run the script in terminal, from the working directory.
 For example:
 ```commandline
-python image_download.py --search-for "mountain view californial"
+python image_download.py --search-for "mountain view california"
 ```
 You can also customize the number of images to download from the result page by specifying the argument `number`, and change the default destination to store your downloaded images by modifying the argument `destination`.
