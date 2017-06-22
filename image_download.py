@@ -56,7 +56,7 @@ def search(search_terms, number=15, size=None):
     return links
 
 
-def download(links, destination='images', categorize=True):
+def download(links, destination='images', categorize=True, to_home=True):
     """Download images given links
 
     Args:
@@ -64,10 +64,15 @@ def download(links, destination='images', categorize=True):
         destination(str): Destination to store the downloaded images.
         categorize(bool): Set to True to place downloaded contents in
             different folders, categorized by search terms.
+        to_home(bool): Set to True to save images to the user's home
+            directory instead of locally where the script is run.
 
     Returns:
         None
     """
+    if to_home:
+        destination = os.path.join(os.path.expanduser('~'), destination)
+
     if not os.path.isdir(destination):
         os.mkdir(destination)
 
@@ -103,10 +108,14 @@ if __name__ == '__main__':
     parser.add_argument('--no-categorize', dest='categorize', action='store_false',
                         help='Use this flag to skip sorting results from different search'
                              ' terms into folders and save them under the same directory')
+    parser.add_argument('--local', dest='to_home', action='store_false',
+                        help='Use this flag if you want your images stored in a folder in '
+                             'the same directory this script is run, other wise they will'
+                             'be downloaded to your home directory')
 
     args = parser.parse_args()
 
     search_list = args.search.split(',')
 
     links = search(search_terms=search_list, number=args.number, size=args.size)
-    download(links, destination=args.destination, categorize=args.categorize)
+    download(links, destination=args.destination, categorize=args.categorize, to_home=args.to_home)
