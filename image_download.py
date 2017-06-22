@@ -51,6 +51,7 @@ def search(search_terms, number=15, size=None):
             content_dict = json.loads(content)
             _links[search_term].append(content_dict['ou'])
             if len(_links[search_term]) == number:
+                print ('Found {0} links for {1}'.format(number, search_term))
                 break
 
     return _links
