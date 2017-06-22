@@ -76,6 +76,8 @@ def download(links, destination='images', categorize=True, to_home=True):
     Returns:
         None
     """
+    download_count = 0
+
     if to_home:
         destination = os.path.join(os.path.expanduser('~'), destination)
 
@@ -101,7 +103,10 @@ def download(links, destination='images', categorize=True, to_home=True):
                     f.write(req.content)
             except IOError:
                 pass
+            download_count += 1
             print('Downloaded image {}'.format(img_name))
+
+    print('Download complete, total images downloaded: {}'.format(download_count))
 
 
 if __name__ == '__main__':
