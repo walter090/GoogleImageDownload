@@ -29,10 +29,10 @@ def search(search_terms, number=15, size=None):
     file_format = '&tbs=ift:jpg'
     root = 'https://www.google.com/search?'
 
-    links = {}
+    _links = {}
 
     for search_term in search_terms:
-        links[search_term] = []
+        _links[search_term] = []
 
         joined_search_term = '+'.join(search_term.split(' '))
         url = root + param + joined_search_term + file_format
@@ -49,11 +49,11 @@ def search(search_terms, number=15, size=None):
         for result in results:
             content = result.get_text()
             content_dict = json.loads(content)
-            links[search_term].append(content_dict['ou'])
-            if len(links[search_term]) == number:
+            _links[search_term].append(content_dict['ou'])
+            if len(_links[search_term]) == number:
                 break
 
-    return links
+    return _links
 
 
 def download(links, destination='images', categorize=True, to_home=True):
