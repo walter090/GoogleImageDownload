@@ -57,7 +57,7 @@ def search(search_terms, number=15, size=None):
             _links[search_term].append(content_dict['ou'])
             if len(_links[search_term]) == number:
                 break
-        print('Found {0} links for {1}'.format(_links[search_term], search_term))
+        print('Found {0} links for {1}'.format(len(_links[search_term]), search_term))
 
     return _links
 
