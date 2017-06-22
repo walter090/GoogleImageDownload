@@ -25,9 +25,9 @@ def search(search_terms, number=15, size=None):
     """
     size_desig = {'large': 'l', 'medium': 'm', 'icon': 'i'}
 
-    param = 'tbm=isch&q='
-    file_format = '&tbs=ift:jpg'
-    root = 'https://www.google.com/search?'
+    root = 'https://www.google.com/search?q='
+    params_head = '&tbm=isch&tbs=isz:'
+    params_tail = ',itp:photo,ic:color,ift:jpg'
 
     _links = {}
 
@@ -35,10 +35,10 @@ def search(search_terms, number=15, size=None):
         _links[search_term] = []
 
         joined_search_term = '+'.join(search_term.split(' '))
-        url = root + param + joined_search_term + file_format
+        url = root + joined_search_term + params_head + 'm' + params_tail
 
         if size is not None:
-            url = root + '&tbs=isz:' + size_desig[size] + '&tbm=isch&q=' + joined_search_term
+            url = root + joined_search_term + params_head + size_desig[size] + params_tail
 
         req = Request(url, headers=headers)
         # noinspection PyBroadException
