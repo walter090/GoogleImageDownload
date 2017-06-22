@@ -12,4 +12,8 @@ For example:
 ```commandline
 python image_download.py --search-for "mountain view california"
 ```
+Or if you want results for multiple search terms, seperate them with commas
+```commandline
+python image_download.py --search-for "new york,san francisco,montreal"
+```
 You can also customize the number of images to download from the result page by specifying the argument `number`, and change the default destination to store your downloaded images by modifying the argument `destination`.
