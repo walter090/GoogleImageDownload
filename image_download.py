@@ -4,6 +4,7 @@ import requests
 import json
 import os
 import argparse
+import sys
 
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux i686)'
                          ' AppleWebKit/537.17 (KHTML, like Gecko)'
@@ -74,6 +75,10 @@ def download(links, destination='images'):
 
 
 if __name__ == '__main__':
+
+    if sys.version_info[0] < 3:
+        raise Exception('Python 3.x required')
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--search-for', dest='search', type=str,
                         help='Search term for google image search')
