@@ -41,7 +41,12 @@ def search(search_terms, number=15, size=None):
             url = root + '&tbs=isz:' + size_desig[size] + '&tbm=isch&q=' + joined_search_term
 
         req = Request(url, headers=headers)
-        source = urlopen(req).read()
+        # noinspection PyBroadException
+        try:
+            source = urlopen(req).read()
+        except Exception:
+            continue
+
         soup = BeautifulSoup(source, 'html5lib')
         body = soup.body
         results = body.find_all('div', class_='rg_meta notranslate')
@@ -51,8 +56,8 @@ def search(search_terms, number=15, size=None):
             content_dict = json.loads(content)
             _links[search_term].append(content_dict['ou'])
             if len(_links[search_term]) == number:
-                print ('Found {0} links for {1}'.format(number, search_term))
                 break
+        print('Found {0} links for {1}'.format(_links[search_term], search_term))
 
     return _links
 
@@ -86,9 +91,16 @@ def download(links, destination='images', categorize=True, to_home=True):
 
         for img_link in links[category]:
             img_name = img_link.split('/')[-1]
-            req = requests.get(img_link, stream=True, headers=headers)
-            with open(os.path.join(folder, img_name), 'wb') as f:
-                f.write(req.content)
+            # noinspection PyBroadException
+            try:
+                req = requests.get(img_link, stream=True, headers=headers)
+            except Exception:
+                continue
+            try:
+                with open(os.path.join(folder, img_name), 'wb') as f:
+                    f.write(req.content)
+            except IOError:
+                pass
             print('Downloaded image {}'.format(img_name))
 
 
