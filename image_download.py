@@ -102,7 +102,7 @@ def download(links, destination='images', categorize=True, to_home=True):
                 with open(os.path.join(folder, img_name), 'wb') as f:
                     f.write(req.content)
             except IOError:
-                pass
+                continue
             download_count += 1
             print('Downloaded image {}'.format(img_name))
 
