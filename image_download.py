@@ -112,7 +112,8 @@ def download(links, destination='images', categorize=True, to_home=True):
 if __name__ == '__main__':
 
     if sys.version_info[0] < 3:
-        raise Exception('Python 3.x required')
+        print('Python 3.x required')
+        sys.exit()
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--search-for', dest='search', type=str,
