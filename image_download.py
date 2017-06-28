@@ -90,26 +90,31 @@ def download(links, destination='images', categorize=True, to_home=True):
             folder = os.path.join(destination, '_'.join(category.split(' ')))
             if not os.path.isdir(folder):
                 os.mkdir(folder)
-
-        for img_link in links[category]:
-            img_name = img_link.split('/')[-1]
-            # noinspection PyBroadException
-            try:
-                req = requests.get(img_link, stream=True, headers=headers)
-            except Exception:
-                continue
-            try:
-                with open(os.path.join(folder, img_name), 'wb') as f:
-                    f.write(req.content)
-            except IOError:
-                continue
-            download_count += 1
-            print('Downloaded image {}'.format(img_name))
+        try:
+            for img_link in links[category]:
+                img_name = img_link.split('/')[-1]
+                # noinspection PyBroadException
+                try:
+                    req = requests.get(img_link, stream=True, headers=headers)
+                except Exception:
+                    continue
+                try:
+                    with open(os.path.join(folder, img_name), 'wb') as f:
+                        f.write(req.content)
+                except IOError:
+                    continue
+                download_count += 1
+                print('Downloaded image {}'.format(img_name))
+        except KeyboardInterrupt:
+            print('Terminated by user.')
 
     print('Download complete, total images downloaded: {}'.format(download_count))
 
 
 if __name__ == '__main__':
+
+    print('Downloading a large amount of images could take a while, if you wish to'
+          'end the process, press Ctrl+C.')
 
     if sys.version_info[0] < 3:
         print('Python 3.x required')
