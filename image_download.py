@@ -5,6 +5,7 @@ import json
 import os
 import argparse
 import sys
+import uuid
 
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux i686)'
                          ' AppleWebKit/537.17 (KHTML)'
@@ -104,6 +105,14 @@ def download(links, destination='images', categorize=True, to_home=True):
                 except IOError:
                     continue
                 download_count += 1
+
+                file_name = os.path.join(folder, img_name)
+                if not file_name.split('.')[-1] == 'jpg':
+                    try:
+                        os.rename(file_name, file_name + '.jpg')
+                    except IOError:
+                        os.rename(file_name, uuid.uuid4().hex + '.jpg')
+
                 print('Downloaded image {}'.format(img_name))
         except KeyboardInterrupt:
             print('Terminated by user.')
@@ -113,7 +122,7 @@ def download(links, destination='images', categorize=True, to_home=True):
 
 if __name__ == '__main__':
 
-    print('Downloading a large amount of images could take a while, if you wish to'
+    print('Downloading a large amount of images could take a while, if you wish to '
           'end the process, press Ctrl+C.')
 
     if sys.version_info[0] < 3:
